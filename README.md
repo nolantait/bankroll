@@ -1,8 +1,10 @@
 # Bankroll
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bankroll`. To experiment with that code, run `bin/console` for an interactive prompt.
+Bankroll is a set of calculations for mortgages and loans.
 
-TODO: Delete this and the text above, and describe your gem
+Features:
+- Uses safe math with BigDecimal
+- Returns using Money or Percentage gems
 
 ## Installation
 
@@ -22,7 +24,58 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+
+apr = Bankroll.apr(interest_rate: 0.025, duration: 30.years, amount: 360_000)
+puts apr #=> Percentage.new(0.11)
+
+payment = Bankroll.payment(duration: 30.years, interest_rate: 0.025, loan_amount: 360_000)
+puts payment #=> Payment(total: Money(59_680.69), per_month: Money(3_600.00))
+puts payment.per_month #=> Money.new(3_600.00)
+
+net_credit = Bankroll.net_credit(points: 100.1, ysp: 0.0025, loan_amount: 360_000)
+puts net_credit #=> Money.new()
+
+original_amount = Bankroll.present_value(
+  periods: 360, # 30 years
+  monthly_payment: 3_600, 
+  interest_rate: 0.025, # 2.5%
+  future_value: 0
+)
+puts original_amount #=> Money(360_000)
+
+loan_to_value_ratio = Bankroll.ltv(
+  loan_amount: 360_000, 
+  total_assets: 800_000
+)
+combined_loan_to_value_ratio = Bankroll.cltv(
+  loan_amounts: [
+    480_000,
+    360_000
+  ],
+  total_assets: 800_000
+)
+high_combined_loan_to_value_ratio = Bankroll.hcltv(
+  loans: [
+    ["Loan A", 360_000, "heloc"]
+    ["Loan B", 360_000, "mortgage"]
+  ],
+  total_assets: 800_000
+)
+
+simulation = Bankroll.simulate do |sim|
+  sim.loan = Bankroll::Loan["Original", 400_000]
+  sim.assets << Bankroll::Asset["House", 360_000]
+  sim.debts << Bankroll::Debt["Car", 36_000]
+  sim.income << Bankroll::Income["Work", 400_000]
+end
+
+situation_a = simulation.refinance(interest_rate:, cash_out:, closing_costs:, points:)
+situation_b = simulation.refinance(interest_rate:, cash_out:, closing_costs:, points:)
+
+result = Bankroll.compare(situation_a, situation_b)
+
+```
 
 ## Development
 
