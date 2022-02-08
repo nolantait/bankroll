@@ -16,7 +16,7 @@ module Bankroll
       if value.is_a? Bankroll::Decimal
         return value
       else
-        Bankroll::Decimal[value]
+        Bankroll::Decimal[value.to_s]
       end
     end
 

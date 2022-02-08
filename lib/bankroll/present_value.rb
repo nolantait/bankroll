@@ -18,7 +18,7 @@ module Bankroll
     option :interest_rate, Types["bankroll.decimal"], default: -> { ZERO }
 
     def call
-      present_value.round
+      present_value
     end
 
     private

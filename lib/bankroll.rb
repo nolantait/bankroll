@@ -18,7 +18,7 @@ require_relative "bankroll/annuity_factor"
 require_relative "bankroll/payment"
 require_relative "bankroll/unpaid_balance"
 
-BigDecimal.mode(BigDecimal::ROUND_MODE, :up)
+BigDecimal.mode(BigDecimal::ROUND_MODE, Bankroll::Decimal::ROUNDING)
 
 module Bankroll
   class Error < StandardError; end
