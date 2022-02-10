@@ -31,23 +31,23 @@ module Bankroll
     end
 
     def +(other)
-      wrap super(other)
+      wrap super(Decimal[other].value)
     end
 
     def -(other)
-      wrap super(other)
+      wrap super(Decimal[other].value)
     end
 
     def *(other)
-      wrap super(other)
+      wrap super(Decimal[other].value)
     end
 
     def /(other)
-      wrap super(other)
+      wrap super(Decimal[other].value)
     end
 
     def **(other)
-      wrap super(other)
+      wrap super(Decimal[other].value)
     end
 
     private

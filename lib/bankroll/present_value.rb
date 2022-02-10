@@ -10,8 +10,6 @@ module Bankroll
     # - Term: 25 years
     # - Interest rate: 10%
 
-    ZERO = Decimal['0'].freeze
-
     option :periods, Types["bankroll.decimal"]
     option :payment, Types["bankroll.decimal"]
     option :future_value, Types["bankroll.decimal"], default: -> { ZERO }

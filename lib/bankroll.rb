@@ -11,7 +11,7 @@ require_relative "bankroll/callable"
 require_relative "bankroll/decimal"
 require_relative "bankroll/types"
 
-require_relative "bankroll/apr"
+require_relative "bankroll/cumulative_interest"
 require_relative "bankroll/present_value"
 require_relative "bankroll/future_value"
 require_relative "bankroll/annuity_factor"
@@ -21,6 +21,10 @@ require_relative "bankroll/unpaid_balance"
 BigDecimal.mode(BigDecimal::ROUND_MODE, Bankroll::Decimal::ROUNDING)
 
 module Bankroll
+  ZERO = Decimal['0'].freeze
+  ONE = Decimal['1'].freeze
+
+
   class Error < StandardError; end
   # Your code goes here...
 

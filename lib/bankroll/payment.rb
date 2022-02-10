@@ -3,8 +3,6 @@ module Bankroll
     extend Callable
     extend Dry::Initializer
 
-    ONE = Decimal['1'].freeze
-
     option :loan_amount, Types["bankroll.decimal"]
     option :interest_rate, Types["bankroll.decimal"]
     option :periods, Types["bankroll.decimal"]
