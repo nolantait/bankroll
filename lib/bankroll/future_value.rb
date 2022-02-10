@@ -1,51 +1,29 @@
 module Bankroll
   class FutureValue
     # Future value is the value to which an investment will grow 
-    # after one or more compounding periods. 
+    # after one or more periods. Usage is with a fixed payment 
+
+    extend Callable
+    extend Dry::Initializer
 
     def self.call(**kwargs)
       new(**kwargs).call
     end
 
-    # @params annuity: [:ordinary, :due]
-    # @returns BigDecimal: The value at the end of the period
-    def initialize(present_value:, interest_rate:, periods:, payment: 0)
-      @present_value = BigDecimal(present_value.to_s)
-      @interest_rate = BigDecimal(interest_rate.to_s)
-      @payment = BigDecimal(payment.to_s)
-      @periods = BigDecimal(periods.to_s)
-      @annuity = annuity
-    end
+    option :periods, Types["bankroll.decimal"]
+    option :interest_rate, Types["bankroll.decimal"]
+    option :payment, Types["bankroll.decimal"], default: -> { ZERO }
+    option :present_value, Types["bankroll.decimal"], default: -> { ZERO }
 
     def call
-      # (@present_value * compound_rate) -
-      #   (@payment * (1 + @interest_rate) / @interest_rate) *
-      #   (compound_rate - 1)
-
-      # case @payment
-      # when 0
-      #   case @periods
-      #   when 0
-      #     @present_value
-      #   when 1
-      #     @present_value * interest
-      #   else
-      #     @present_value * compound_interest
-      #   end
-      # else
-      # else
-      #   raise ArgumentError
-      # end
+      (effective_rate * present_value) +
+        (@payment * (1 + @interest_rate * 0) * (effective_rate - 1) / @interest_rate)
     end
 
     private
 
-    def compound_interest
-      interest ** @periods
-    end
-
-    def interest
-      (1 + @interest_rate)
+    def effective_rate
+      (ONE + @interest_rate) ** @periods
     end
   end
 end

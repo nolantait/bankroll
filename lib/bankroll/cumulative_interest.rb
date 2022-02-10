@@ -11,23 +11,24 @@ module Bankroll
     option :loan_amount, Types["bankroll.decimal"]
 
     def call
-      temp = (interest_on_principle - @payment) *
-        ((effective_rate - ONE) / @interest_rate)
-
-      temp + payments_made
+      payments_made + (total_interest_paid_per_period - @payment) * portion_of_interest_paid
     end
 
     private
+
+    def portion_of_interest_paid
+      ((compound_rate - ONE) / @interest_rate)
+    end
 
     def payments_made
       @payment * @periods
     end
 
-    def effective_rate
+    def compound_rate
       (ONE + @interest_rate) ** @periods
     end
 
-    def interest_on_principle
+    def total_interest_paid_per_period
       @loan_amount * @interest_rate
     end
   end

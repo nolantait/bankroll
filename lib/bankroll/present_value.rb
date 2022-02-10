@@ -3,12 +3,8 @@ module Bankroll
     extend Callable
     extend Dry::Initializer
 
-    # Calculates the present value of an annuity
-    # ==========================================
-    # A borrower gets a loan with the following:
-    # - Loan amount: $100,000
-    # - Term: 25 years
-    # - Interest rate: 10%
+    # Calculates the present value of an annuity, e.g. the minimal loan amount
+    # required for a certain home price
 
     option :periods, Types["bankroll.decimal"]
     option :payment, Types["bankroll.decimal"]
