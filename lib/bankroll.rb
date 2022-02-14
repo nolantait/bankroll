@@ -17,6 +17,7 @@ require_relative "bankroll/future_value"
 require_relative "bankroll/annuity_factor"
 require_relative "bankroll/payment"
 require_relative "bankroll/unpaid_balance"
+require_relative "bankroll/interest_payment"
 
 BigDecimal.mode(BigDecimal::ROUND_MODE, Bankroll::Decimal::ROUNDING)
 
