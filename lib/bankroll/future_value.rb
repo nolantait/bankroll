@@ -6,10 +6,6 @@ module Bankroll
     extend Callable
     extend Dry::Initializer
 
-    def self.call(**kwargs)
-      new(**kwargs).call
-    end
-
     option :periods, Types["bankroll.decimal"]
     option :interest_rate, Types["bankroll.decimal"]
     option :payment, Types["bankroll.decimal"], default: -> { ZERO }

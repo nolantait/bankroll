@@ -5,7 +5,7 @@ module Bankroll
 
     ONE = Decimal['1'].freeze
 
-    option :loan_amount, Types["bankroll.decimal"]
+    option :present_value, Types["bankroll.decimal"]
     option :interest_rate, Types["bankroll.decimal"]
     option :periods, Types["bankroll.decimal"]
     option :periods_elapsed, Types["bankroll.decimal"]
@@ -22,7 +22,7 @@ module Bankroll
 
     def payment
       Payment.call(
-        loan_amount: @loan_amount,
+        present_value: @present_value,
         interest_rate: @interest_rate,
         periods: @periods
       )

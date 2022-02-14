@@ -5,7 +5,7 @@ RSpec.describe Bankroll::InterestPayment do
     interest_payment = described_class.call(
       interest_rate: Bankroll::Decimal["0.03"] / 12,
       periods: 360,
-      periods_elapsed: 17,
+      periods_elapsed: 16,
       present_value: 165_000,
     ).round
 

@@ -19,7 +19,7 @@ module Bankroll
 
     def future_loan_balance
       FutureValue.call(
-        periods: @periods_elapsed - 1,
+        periods: @periods_elapsed,
         payment: payment,
         present_value: @present_value,
         interest_rate: @interest_rate
@@ -28,7 +28,7 @@ module Bankroll
 
     def payment
       @payment ||= -Payment.call(
-        loan_amount: @present_value,
+        present_value: @present_value,
         interest_rate: @interest_rate,
         periods: @periods
       )

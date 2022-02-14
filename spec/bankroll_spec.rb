@@ -13,7 +13,7 @@ RSpec.describe Bankroll do
   describe ".payment" do
     it "returns the expected payment" do
       result = Bankroll.payment(
-        loan_amount: loan_amount,
+        present_value: loan_amount,
         periods: periods,
         interest_rate: interest_rate
       ).round
@@ -25,7 +25,7 @@ RSpec.describe Bankroll do
   describe ".unpaid_balance" do
     it "returns the amount remaining in a loans payment schedule" do
       result = Bankroll.unpaid_balance(
-        loan_amount: loan_amount,
+        present_value: loan_amount,
         interest_rate: interest_rate,
         periods: periods,
         periods_elapsed: 1,

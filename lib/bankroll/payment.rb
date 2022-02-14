@@ -3,7 +3,7 @@ module Bankroll
     extend Callable
     extend Dry::Initializer
 
-    option :loan_amount, Types["bankroll.decimal"]
+    option :present_value, Types["bankroll.decimal"]
     option :interest_rate, Types["bankroll.decimal"]
     option :periods, Types["bankroll.decimal"]
 
@@ -14,7 +14,7 @@ module Bankroll
     private
 
     def payment
-      @loan_amount * mortgage_constant
+      @present_value * mortgage_constant
     end
 
     def mortgage_constant
