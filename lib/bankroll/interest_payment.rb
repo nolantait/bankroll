@@ -7,7 +7,7 @@ module Bankroll
 
     option :interest_rate, Types["bankroll.decimal"]
     option :periods, Types["bankroll.decimal"]
-    option :periods_elapsed, Types["bankroll.decimal"]
+    option :period, Types["integer"]
     option :present_value, Types["bankroll.decimal"]
     option :payment, Types["bankroll.decimal"] | Types["nil"], default: -> { nil }
 
@@ -19,7 +19,7 @@ module Bankroll
 
     def future_loan_balance
       FutureValue.call(
-        periods: @periods_elapsed,
+        periods: @period - 1,
         payment: payment,
         present_value: @present_value,
         interest_rate: @interest_rate

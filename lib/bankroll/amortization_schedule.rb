@@ -21,7 +21,7 @@ module Bankroll
         balance = @present_value
 
         periods.times do |period|
-          interest = interest_payment(period)
+          interest = interest_payment(period + 1)
           principal = payment - interest
           total_interest += interest
           balance -= principal
@@ -47,7 +47,7 @@ module Bankroll
       InterestPayment.call(
         interest_rate: @interest_rate,
         periods: @periods,
-        periods_elapsed: period,
+        period: period,
         present_value: @present_value,
         payment: -payment
       )
