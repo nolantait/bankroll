@@ -44,7 +44,7 @@ module Bankroll
     UnpaidBalance.call(**kwargs)
   end
 
-  def self.loan_amount(**kwargs)
+  def self.present_value(**kwargs)
     PresentValue.call(**kwargs)
   end
 end

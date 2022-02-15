@@ -26,54 +26,100 @@ Or install it yourself as:
 
 ```ruby
 
-apr = Bankroll.apr(interest_rate: 0.025, duration: 30.years, amount: 360_000)
-puts apr #=> Percentage.new(0.11)
+# What is the monthly payment?
+payment = Bankroll.payment(
+  periods: 360, 
+  interest_rate: 0.01 / 12.0,
+  present_value: 1_000_000
+).round
+puts payment #=> Bankroll::Decimal["3_216.40"]
 
-payment = Bankroll.payment(duration: 30.years, interest_rate: 0.025, loan_amount: 360_000)
-puts payment #=> Payment(total: Money(59_680.69), per_month: Money(3_600.00))
-puts payment.per_month #=> Money.new(3_600.00)
-
-net_credit = Bankroll.net_credit(points: 100.1, ysp: 0.0025, loan_amount: 360_000)
-puts net_credit #=> Money.new()
-
+# What was the original loan amount?
 original_amount = Bankroll.present_value(
   periods: 360, # 30 years
-  monthly_payment: 3_600, 
-  interest_rate: 0.025, # 2.5%
-  future_value: 0
-)
-puts original_amount #=> Money(360_000)
+  monthly_payment: 3_216.40, 
+  interest_rate: 0.01 / 12.0, # 2.5%
+).round
+puts original_amount #=> Bankroll::Decimal["1_000_001.49"]
 
-loan_to_value_ratio = Bankroll.ltv(
-  loan_amount: 360_000, 
-  total_assets: 800_000
-)
-combined_loan_to_value_ratio = Bankroll.cltv(
-  loan_amounts: [
-    480_000,
-    360_000
-  ],
-  total_assets: 800_000
-)
-high_combined_loan_to_value_ratio = Bankroll.hcltv(
-  loans: [
-    ["Loan A", 360_000, "heloc"]
-    ["Loan B", 360_000, "mortgage"]
-  ],
-  total_assets: 800_000
-)
+# What does the balance look like after a single mortgage payment?
+unpaid_balance = Bankroll.unpaid_balance(
+  present_value: 1_000_000,
+  interest_rate: 0.01 / 12.0,
+  periods: 360,
+  period: 1,
+  payment: 3_216.40
+).round
+puts unpaid_balance #=> Bankroll::Decimal["997_616.94"]
 
-simulation = Bankroll.simulate do |sim|
-  sim.loan = Bankroll::Loan["Original", 400_000]
-  sim.assets << Bankroll::Asset["House", 360_000]
-  sim.debts << Bankroll::Debt["Car", 36_000]
-  sim.income << Bankroll::Income["Work", 400_000]
-end
+# What was the interest rate?
+interest_rate = Bankroll.interest_rate(
+  present_value: 1_000_000,
+  periods: 360,
+  payment: -3_216.40,
+).round(3)
+puts interest_rate #=> Bankroll::Decimal["0.833e-3"]
 
-situation_a = simulation.refinance(interest_rate:, cash_out:, closing_costs:, points:)
-situation_b = simulation.refinance(interest_rate:, cash_out:, closing_costs:, points:)
+# What is the annuity factor of a rate for n periods?
+annuity_factor = Bankroll.annuity_factor(
+  interest_rate: 0.01,
+  periods: 2
+).round(4)
+puts annuity_factor #=> Bankroll::Decimal["1.9704"]
 
-result = Bankroll.compare(situation_a, situation_b)
+# What is the total interest paid on a 500_000 1% mortgage
+interest_paid = Bankroll.cumulative_interest(
+  periods: 360,
+  interest_rate: 0.01 / 12.0,
+  payment: 1_608.20,
+  present_value: 500_000
+).round
+puts interest_paid #=> Bankroll::Decimal["832.34"]
+
+# What is the total cost of a 500_000 1% loan with interest?
+total_amount = Bankroll.future_value(
+  present_value: 0,
+  interest_rate: 0.01 / 12.0,
+  periods: 360,
+  payment: 1_608.20
+).round
+puts total_amount #=> Bankroll::Decimal["647_846.10"]
+
+# What is the interest payment on the 17th period of a $165,000 3% mortgage?
+interest_payment = Bankroll.interest_payment(
+  interest_rate: 0.03 / 12.0,
+  periods: 360,
+  period: 17,
+  present_value: 165_000
+).round
+puts interest_payment #=> Bankroll::Decimal["400.96"]
+
+# How many periods until a -$1000 account with -$100/month reaches $10_000 with
+# 12% interest rate?
+total_periods = Bankroll.total_periods(
+  interest_rate: 0.12 / 12.0,
+  payment: -100,
+  present_value: -1_000,
+  future_value: 10_000
+)
+puts total_periods #=> Bankroll::Decimal["59.67"]
+
+# What is the amortization schedule of a $165_000 3% 30 year mortgage?
+amortization_schedule = Bankroll.amortization_schedule(
+  present_value: 165_000,
+  interest_rate: 0.03 / 12.0,
+  periods: 360
+)
+puts amortization_schedule.payments #=> [
+#   Bankroll::AmortizationSchedule::Payment.new(
+#     payment: Bankroll::Decimal["695.65"],
+#     principal: Bankroll::Decimal["283.15"],
+#     interest: Bankroll::Decimal["412.50"],
+#     total_interest: Bankroll::Decimal["412.50"],
+#     balance: Bankroll::Decimal["164_716.85"]
+#   )
+#   ... and 359 more payments
+# ]
 
 ```
 

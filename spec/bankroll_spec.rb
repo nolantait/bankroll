@@ -48,9 +48,9 @@ RSpec.describe Bankroll do
     end
   end
 
-  describe ".loan_amount" do
+  describe ".present_value" do
     it "returns the expected loan amount" do
-      result = Bankroll.loan_amount(
+      result = Bankroll.present_value(
         periods: periods,
         payment: payment,
         interest_rate: interest_rate
