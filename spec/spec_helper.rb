@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "byebug"
+
 require "bankroll"
 
 RSpec.configure do |config|
