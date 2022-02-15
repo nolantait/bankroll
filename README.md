@@ -1,10 +1,18 @@
 # Bankroll
 
-Bankroll is a set of calculations for mortgages and loans.
+Bankroll is a set of financial calculations for mortgages and loans.
+
+The goal of this library is to make time value of money calculations
+understandable and decomposed into well written functions.
+
+I find most financial math libraries to be somewhat opaque so hopefully
+this helps when learning how to calculate mortgages and other annuity based
+investments.
 
 Features:
-- Uses safe math with BigDecimal
-- Returns using Money or Percentage gems
+- Uses safe math with BigDecimal through the Bankroll::Decimal api
+- Handles only ordinary annuities (annuities due at the END of the period)
+- Implements most excel functions using some inspiration from Exonio gem
 
 ## Installation
 
