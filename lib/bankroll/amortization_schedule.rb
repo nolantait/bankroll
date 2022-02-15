@@ -1,6 +1,7 @@
 module Bankroll
   class AmortizationSchedule
     extend Dry::Initializer
+    extend Callable
 
     Payment = Struct.new(
       :payment,
@@ -39,6 +40,10 @@ module Bankroll
 
     def payments
       @payments ||= each.to_a
+    end
+
+    def call
+      self
     end
 
     private

@@ -47,4 +47,24 @@ module Bankroll
   def self.present_value(**kwargs)
     PresentValue.call(**kwargs)
   end
+
+  def self.future_value(**kwargs)
+    FutureValue.call(**kwargs)
+  end
+
+  def self.cumulative_interest(**kwargs)
+    CumulativeInterest.call(**kwargs)
+  end
+
+  def self.annuity_factor(**kwargs)
+    AnnuityFactor.call(**kwargs)
+  end
+
+  def self.total_periods(**kwargs)
+    TotalPeriods.call(**kwargs)
+  end
+
+  def self.amortization_schedule(**kwargs)
+    AmortizationSchedule.call(**kwargs)
+  end
 end
