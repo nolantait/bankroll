@@ -7,7 +7,7 @@ RSpec.describe Bankroll::UnpaidBalance do
       payment: 4_685,
       interest_rate: 0.08,
       periods: 25,
-      periods_elapsed: 7
+      period: 7
     ).round
 
     expect(result).to eq Bankroll::Decimal['43_897.35']

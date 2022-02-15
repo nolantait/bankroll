@@ -8,7 +8,7 @@ module Bankroll
     option :present_value, Types["bankroll.decimal"]
     option :interest_rate, Types["bankroll.decimal"]
     option :periods, Types["bankroll.decimal"]
-    option :periods_elapsed, Types["bankroll.decimal"]
+    option :period, Types["bankroll.decimal"]
 
     def call
       unpaid_balance
@@ -29,11 +29,14 @@ module Bankroll
     end
 
     def annuity_factor
-      AnnuityFactor.call(interest_rate: @interest_rate, periods: remaining)
+      AnnuityFactor.call(
+        interest_rate: @interest_rate, 
+        periods: remaining
+      )
     end
 
     def remaining
-      @periods - @periods_elapsed
+      @periods - @period
     end
   end
 end

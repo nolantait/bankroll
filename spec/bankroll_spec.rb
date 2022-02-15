@@ -28,7 +28,7 @@ RSpec.describe Bankroll do
         present_value: loan_amount,
         interest_rate: interest_rate,
         periods: periods,
-        periods_elapsed: 1,
+        period: 1,
         payment: payment
       ).round
 
