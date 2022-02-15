@@ -21,5 +21,6 @@ module Bankroll
     end
 
     register("bankroll.decimal", Constructor[Bankroll::Decimal, fn: ConvertToDecimal])
+    register("annuity_type", Types["symbol"].enum(:ordinary, :due))
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe Bankroll::CumulativeInterest do
       periods: 1,
       interest_rate: Bankroll::Decimal[0.01] / Bankroll::Decimal[12],
       payment: Bankroll::Decimal['1_608.20'],
-      loan_amount: Bankroll::Decimal[500_000]
+      present_value: Bankroll::Decimal[500_000]
     ).round
 
     expect(result).to eq Bankroll::Decimal['416.67']
@@ -17,7 +17,7 @@ RSpec.describe Bankroll::CumulativeInterest do
       periods: 2,
       interest_rate: Bankroll::Decimal[0.01] / Bankroll::Decimal[12],
       payment: Bankroll::Decimal['1_608.20'],
-      loan_amount: Bankroll::Decimal[500_000]
+      present_value: Bankroll::Decimal[500_000]
     ).round
 
     expect(result).to eq Bankroll::Decimal['832.34']
@@ -28,7 +28,7 @@ RSpec.describe Bankroll::CumulativeInterest do
       periods: 360,
       interest_rate: Bankroll::Decimal[0.01] / Bankroll::Decimal[12],
       payment: Bankroll::Decimal['1_608.20'],
-      loan_amount: Bankroll::Decimal[500_000]
+      present_value: Bankroll::Decimal[500_000]
     ).round
 
     expect(result).to eq Bankroll::Decimal['78_950.99']

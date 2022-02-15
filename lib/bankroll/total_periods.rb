@@ -12,6 +12,7 @@ module Bankroll
     option :payment, Types["bankroll.decimal"]
     option :present_value, Types["bankroll.decimal"]
     option :future_value, Types["bankroll.decimal"]
+    option :type, Types["annuity_type"], default: -> { :ordinary }
 
     def call
       return (-@present_value - @future_value) / @payment if interest_rate.zero?
@@ -22,12 +23,22 @@ module Bankroll
     private
 
     def periods
-      Math.log((-@future_value + contribution) / (@present_value + contribution)) /
+      Math.log(percentage_of_total_interest_on_principal) /
         Math.log((1 + @interest_rate))
     end
 
-    def contribution
-      (@payment * (1 + @interest_rate)) / @interest_rate
+    def percentage_of_total_interest_on_principal
+      (-@future_value + initial_payment_interest) / 
+        (@present_value + initial_payment_interest)
+    end
+
+    def initial_payment_interest
+      case type
+      when :ordinary
+        (@payment * (1 + @interest_rate)) / @interest_rate
+      else
+        0
+      end
     end
   end
 end

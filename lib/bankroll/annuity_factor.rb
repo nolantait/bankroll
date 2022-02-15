@@ -15,7 +15,11 @@ module Bankroll
     private
 
     def annuity_factor
-      (ONE - (ONE + @interest_rate) ** -@periods) / @interest_rate
+      (ONE - interest_contribution_per_period) / @interest_rate
+    end
+
+    def interest_contribution_per_period
+      (ONE + @interest_rate) ** -@periods
     end
   end
 end

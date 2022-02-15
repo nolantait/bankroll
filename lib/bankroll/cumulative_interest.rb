@@ -8,15 +8,16 @@ module Bankroll
     option :periods, Types["bankroll.decimal"]
     option :payment, Types["bankroll.decimal"]
     option :interest_rate, Types["bankroll.decimal"], default: -> { ZERO }
-    option :loan_amount, Types["bankroll.decimal"]
+    option :present_value, Types["bankroll.decimal"]
 
     def call
-      payments_made + (total_interest_paid_per_period - @payment) * portion_of_interest_paid
+      payments_made + 
+        ((total_interest - @payment) * percentage_of_interest_per_period)
     end
 
     private
 
-    def portion_of_interest_paid
+    def percentage_of_interest_per_period
       ((compound_rate - ONE) / @interest_rate)
     end
 
@@ -28,8 +29,8 @@ module Bankroll
       (ONE + @interest_rate) ** @periods
     end
 
-    def total_interest_paid_per_period
-      @loan_amount * @interest_rate
+    def total_interest
+      @present_value * @interest_rate
     end
   end
 end
