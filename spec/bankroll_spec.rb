@@ -7,7 +7,7 @@ RSpec.describe Bankroll do
 
   let(:payment) { Bankroll::Decimal['3_216.40'] }
   let(:loan_amount) { Bankroll::Decimal['1_000_000'] }
-  let(:periods) { Bankroll::Decimal['360'] }
+  let(:periods) { 360 }
   let(:interest_rate) { Bankroll::Decimal['0.01'] / Bankroll::Decimal['12'] }
 
   describe ".payment" do
@@ -36,17 +36,17 @@ RSpec.describe Bankroll do
     end
   end
 
-  # describe ".interest_rate" do
-  #   it "returns the expected rate" do
-  #     result = Bankroll.interest_rate(
-  #       loan_amount: loan_amount,
-  #       periods: periods,
-  #       payment: payment
-  #     )
+  describe ".interest_rate" do
+    it "returns the expected rate" do
+      result = Bankroll.interest_rate(
+        present_value: loan_amount,
+        periods: periods,
+        payment: -payment
+      ).round(3)
 
-  #     expect(result).to eq interest_rate
-  #   end
-  # end
+      expect(result).to eq interest_rate.round(3)
+    end
+  end
 
   describe ".loan_amount" do
     it "returns the expected loan amount" do

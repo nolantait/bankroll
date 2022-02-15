@@ -20,6 +20,7 @@ require_relative "bankroll/unpaid_balance"
 require_relative "bankroll/interest_payment"
 require_relative "bankroll/amortization_schedule"
 require_relative "bankroll/total_periods"
+require_relative "bankroll/interest_rate"
 
 BigDecimal.mode(BigDecimal::ROUND_MODE, Bankroll::Decimal::ROUNDING)
 
