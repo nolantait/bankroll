@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 RSpec.describe Bankroll do
+  let(:interest_rate) { Bankroll::Decimal["0.01"] / Bankroll::Decimal["12"] }
+  let(:periods) { 360 }
+  let(:loan_amount) { Bankroll::Decimal["1_000_000"] }
+  let(:payment) { Bankroll::Decimal["3_216.40"] }
+
   it "has a version number" do
     expect(Bankroll::VERSION).not_to be nil
   end
 
-  let(:payment) { Bankroll::Decimal['3_216.40'] }
-  let(:loan_amount) { Bankroll::Decimal['1_000_000'] }
-  let(:periods) { 360 }
-  let(:interest_rate) { Bankroll::Decimal['0.01'] / Bankroll::Decimal['12'] }
-
   describe ".payment" do
     it "returns the expected payment" do
-      result = Bankroll.payment(
+      result = described_class.payment(
         present_value: loan_amount,
         periods: periods,
         interest_rate: interest_rate
@@ -24,7 +24,7 @@ RSpec.describe Bankroll do
 
   describe ".unpaid_balance" do
     it "returns the amount remaining in a loans payment schedule" do
-      result = Bankroll.unpaid_balance(
+      result = described_class.unpaid_balance(
         present_value: loan_amount,
         interest_rate: interest_rate,
         periods: periods,
@@ -32,13 +32,13 @@ RSpec.describe Bankroll do
         payment: payment
       ).round
 
-      expect(result).to eq Bankroll::Decimal['997_616.94']
+      expect(result).to eq Bankroll::Decimal["997_616.94"]
     end
   end
 
   describe ".interest_rate" do
     it "returns the expected rate" do
-      result = Bankroll.interest_rate(
+      result = described_class.interest_rate(
         present_value: loan_amount,
         periods: periods,
         payment: -payment
@@ -50,19 +50,19 @@ RSpec.describe Bankroll do
 
   describe ".present_value" do
     it "returns the expected loan amount" do
-      result = Bankroll.present_value(
+      result = described_class.present_value(
         periods: periods,
         payment: payment,
         interest_rate: interest_rate
       ).round
 
-      expect(result).to eq Bankroll::Decimal['1_000_001.49']
+      expect(result).to eq Bankroll::Decimal["1_000_001.49"]
     end
   end
 
   describe ".annuity_factor" do
     it "returns the expected factor" do
-      result = Bankroll.annuity_factor(
+      result = described_class.annuity_factor(
         interest_rate: 0.01,
         periods: 2
       ).round(4)
@@ -73,7 +73,7 @@ RSpec.describe Bankroll do
 
   describe ".cumulative_interest" do
     it "returns the expected cumulative interest" do
-      result = Bankroll.cumulative_interest(
+      result = described_class.cumulative_interest(
         periods: 2,
         interest_rate: Bankroll::Decimal["0.01"] / 12.0,
         payment: 1_608.20,
@@ -86,11 +86,11 @@ RSpec.describe Bankroll do
 
   describe ".future_value" do
     it "returns the expected future value" do
-      result = Bankroll.future_value(
+      result = described_class.future_value(
         present_value: 0,
         interest_rate: Bankroll::Decimal["0.01"] / 12.0,
         periods: 360,
-        payment: 1_608.20,
+        payment: 1_608.20
       ).round
 
       expect(result).to eq Bankroll::Decimal["674_846.10"]
@@ -99,7 +99,7 @@ RSpec.describe Bankroll do
 
   describe ".total_periods" do
     it "returns the expected periods" do
-      result = Bankroll.total_periods(
+      result = described_class.total_periods(
         interest_rate: Bankroll::Decimal["0.12"] / 12.0,
         present_value: -1_000,
         payment: -100,
@@ -112,7 +112,7 @@ RSpec.describe Bankroll do
 
   describe ".amortization_schedule" do
     it "returns the expected payments" do
-      result = Bankroll.amortization_schedule(
+      result = described_class.amortization_schedule(
         present_value: 165_000,
         interest_rate: 0.03 / 12.0,
         periods: 360

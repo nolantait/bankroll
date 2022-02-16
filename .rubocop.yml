@@ -311,7 +311,7 @@ Style/MethodCallWithArgsParentheses:
   AllowParenthesesInMultilineCall: true
   IgnoreMacros: false
 Style/MethodDefParentheses:
-  EnforcedStyle: false
+  EnforcedStyle: require_parentheses
 Style/MissingElse:
   Enabled: false
 Style/MultilineInPatternThen:

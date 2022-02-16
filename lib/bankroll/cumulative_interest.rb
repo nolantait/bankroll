@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Bankroll
   class CumulativeInterest
     # Calculate the total interest paid at any period
@@ -11,7 +13,7 @@ module Bankroll
     option :present_value, Types["bankroll.decimal"]
 
     def call
-      payments_made + 
+      payments_made +
         ((total_interest - @payment) * percentage_of_interest_per_period)
     end
 
@@ -26,7 +28,7 @@ module Bankroll
     end
 
     def compound_rate
-      (ONE + @interest_rate) ** @periods
+      (ONE + @interest_rate)**@periods
     end
 
     def total_interest

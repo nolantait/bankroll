@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Bankroll
   module Types
     include Dry.Types()

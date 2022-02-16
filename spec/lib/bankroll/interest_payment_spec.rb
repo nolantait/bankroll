@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 RSpec.describe Bankroll::InterestPayment do
@@ -6,7 +8,7 @@ RSpec.describe Bankroll::InterestPayment do
       interest_rate: Bankroll::Decimal["0.03"] / 12,
       periods: 360,
       period: 17,
-      present_value: 165_000,
+      present_value: 165_000
     ).round
 
     expect(interest_payment).to eq Bankroll::Decimal["400.96"]

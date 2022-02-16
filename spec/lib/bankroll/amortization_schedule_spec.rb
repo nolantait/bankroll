@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 RSpec.describe Bankroll::AmortizationSchedule do
@@ -11,7 +13,8 @@ RSpec.describe Bankroll::AmortizationSchedule do
 
   describe "#initialization" do
     it "returns an amortization schedule" do
-      expect{ amortization_schedule }.not_to raise_error
+      expect { amortization_schedule }
+        .not_to raise_error
     end
   end
 
@@ -24,7 +27,7 @@ RSpec.describe Bankroll::AmortizationSchedule do
           interest: Bankroll::Decimal["412.50"],
           total_interest: Bankroll::Decimal["412.50"],
           balance: Bankroll::Decimal["164_716.85"]
-        ).to_h,
+        ).to_h
       )
 
       expect(amortization_schedule.payments[1].to_h).to eq(

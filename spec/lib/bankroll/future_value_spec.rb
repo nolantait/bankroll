@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 RSpec.describe Bankroll::FutureValue do
@@ -6,7 +8,7 @@ RSpec.describe Bankroll::FutureValue do
       present_value: 0,
       interest_rate: Bankroll::Decimal[0.01] / 12,
       periods: 360,
-      payment: Bankroll::Decimal['1_608.20']
+      payment: Bankroll::Decimal["1_608.20"]
     ).round
 
     expect(result).to eq Bankroll::Decimal["674_846.1"]

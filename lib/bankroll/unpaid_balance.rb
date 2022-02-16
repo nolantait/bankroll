@@ -3,7 +3,7 @@ module Bankroll
     extend Callable
     extend Dry::Initializer
 
-    ONE = Decimal['1'].freeze
+    ONE = Decimal["1"].freeze
 
     option :present_value, Types["bankroll.decimal"]
     option :interest_rate, Types["bankroll.decimal"]
@@ -30,7 +30,7 @@ module Bankroll
 
     def annuity_factor
       AnnuityFactor.call(
-        interest_rate: @interest_rate, 
+        interest_rate: @interest_rate,
         periods: remaining
       )
     end

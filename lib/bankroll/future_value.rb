@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Bankroll
   class FutureValue
-    # Future value is the value to which an investment will grow 
-    # after one or more periods. Usage is with a fixed payment 
+    # Future value is the value to which an investment will grow
+    # after one or more periods. Usage is with a fixed payment
 
     extend Callable
     extend Dry::Initializer
@@ -13,13 +15,13 @@ module Bankroll
 
     def call
       (effective_rate * present_value) +
-        (@payment * (1 + @interest_rate * 0) * (effective_rate - 1) / @interest_rate)
+        (@payment * (1 + (@interest_rate * 0)) * (effective_rate - 1) / @interest_rate)
     end
 
     private
 
     def effective_rate
-      (ONE + @interest_rate) ** @periods
+      (ONE + @interest_rate)**@periods
     end
   end
 end

@@ -25,9 +25,8 @@ require_relative "bankroll/interest_rate"
 BigDecimal.mode(BigDecimal::ROUND_MODE, Bankroll::Decimal::ROUNDING)
 
 module Bankroll
-  ZERO = Decimal['0'].freeze
-  ONE = Decimal['1'].freeze
-
+  ZERO = Decimal["0"].freeze
+  ONE = Decimal["1"].freeze
 
   class Error < StandardError; end
   # Your code goes here...

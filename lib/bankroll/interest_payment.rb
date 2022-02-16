@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Bankroll
   class InterestPayment
     # The interest portion of a payment at period N
@@ -9,7 +11,7 @@ module Bankroll
     option :periods, Types["bankroll.decimal"]
     option :period, Types["integer"]
     option :present_value, Types["bankroll.decimal"]
-    option :payment, Types["bankroll.decimal"] | Types["nil"], default: -> { nil }
+    option :payment, Types["bankroll.decimal"] | Types["nil"], default: -> {}
 
     def call
       future_loan_balance * @interest_rate

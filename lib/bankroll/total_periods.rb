@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Bankroll
   class TotalPeriods
     extend Callable
@@ -28,16 +30,16 @@ module Bankroll
     end
 
     def percentage_of_total_interest_on_principal
-      (-@future_value + initial_payment_interest) / 
+      (-@future_value + initial_payment_interest) /
         (@present_value + initial_payment_interest)
     end
 
     def initial_payment_interest
       case type
-      when :ordinary
-        (@payment * (1 + @interest_rate)) / @interest_rate
-      else
-        0
+        when :ordinary
+          (@payment * (1 + @interest_rate)) / @interest_rate
+        else
+          0
       end
     end
   end

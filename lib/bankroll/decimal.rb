@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Bankroll
   class Decimal < Delegator
     include Dry::Equalizer.new(:value)
@@ -13,15 +15,16 @@ module Bankroll
     end
 
     attr_reader :value
-    alias_method :__getobj__, :value
+
+    alias __getobj__ value
 
     def initialize(value)
       decimal = case value
-      when self.class
-        value.value.to_s
-      else
-        value.to_s
-      end
+                  when self.class
+                    value.value.to_s
+                  else
+                    value.to_s
+                end
 
       @value = BigDecimal(Types["string"][decimal])
     end
