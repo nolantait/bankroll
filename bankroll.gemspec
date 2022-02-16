@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "Mortgage and refinance calculations for ruby"
   spec.description = "Mortgage and refinance calculations for ruby"
-  spec.homepage = "https://taitventures.ca/ruby/bankroll"
+  spec.homepage = "https://github.com/nolantait/bankroll"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
