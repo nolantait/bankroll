@@ -5,6 +5,7 @@ require:
 
 # ==================== Main ==========================
 AllCops:
+  NewCops: enable
   DisplayCopNames: true
   Exclude:
     - "bin/**/*"
@@ -438,6 +439,10 @@ Performance/Sum:
   Enabled: true
 
 # ==================== RSpec ============================
+RSpec/BeEq:
+  Enabled: true
+RSpec/BeNil:
+  Enabled: true
 RSpec/ContextWording:
   Prefixes:
     - when
