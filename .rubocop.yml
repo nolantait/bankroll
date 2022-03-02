@@ -458,7 +458,7 @@ Performance/Sum:
 # ==================== RSpec ============================
 RSpec/BeEql:
   Enabled: true
-RSpec/BeNil:
+RSpec/Be:
   Enabled: true
 RSpec/ContextWording:
   Prefixes:
