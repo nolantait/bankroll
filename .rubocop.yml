@@ -456,7 +456,7 @@ Performance/Sum:
   Enabled: true
 
 # ==================== RSpec ============================
-RSpec/BeEq:
+RSpec/BeEql:
   Enabled: true
 RSpec/BeNil:
   Enabled: true
