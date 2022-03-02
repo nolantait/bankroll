@@ -120,12 +120,14 @@ RSpec.describe Bankroll do
     end
 
     it "returns the expected payments" do
-      expect(result.payments.first).to eq Bankroll::AmortizationSchedule::Payment.new(
-        payment: Bankroll::Decimal["695.65"],
-        principal: Bankroll::Decimal["283.15"],
-        interest: Bankroll::Decimal["412.50"],
-        total_interest: Bankroll::Decimal["412.50"],
-        balance: Bankroll::Decimal["164_716.85"]
+      expect(amortization_schedule.payments.first).to(
+        eq Bankroll::AmortizationSchedule::Payment.new(
+          payment: Bankroll::Decimal["695.65"],
+          principal: Bankroll::Decimal["283.15"],
+          interest: Bankroll::Decimal["412.50"],
+          total_interest: Bankroll::Decimal["412.50"],
+          balance: Bankroll::Decimal["164_716.85"]
+        )
       )
     end
   end

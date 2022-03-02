@@ -19,8 +19,10 @@ RSpec.describe Bankroll::AmortizationSchedule do
   end
 
   describe "#payments" do
-    it "returns the expected payments" do
-      expect(amortization_schedule.payments.first.to_h).to eq(
+    let(:payments) { amortization_schedule.payments }
+
+    it "returns the expected first payment" do
+      expect(payments.first.to_h).to eq(
         described_class::Payment.new(
           payment: Bankroll::Decimal["695.65"],
           principal: Bankroll::Decimal["283.15"],
@@ -29,24 +31,28 @@ RSpec.describe Bankroll::AmortizationSchedule do
           balance: Bankroll::Decimal["164_716.85"]
         ).to_h
       )
+    end
 
-      expect(amortization_schedule.payments[1].to_h).to eq(
+    it "returns the expected middle payment" do
+      expect(payments[1].to_h).to eq(
         described_class::Payment.new(
           payment: Bankroll::Decimal["695.65"],
-          principal: Bankroll::Decimal["283.85"],
+          principal: Bankroll::Decimal["283.86"],
           interest: Bankroll::Decimal["411.79"],
           total_interest: Bankroll::Decimal["824.29"],
-          balance: Bankroll::Decimal["164_433.00"]
+          balance: Bankroll::Decimal["164_432.99"]
         ).to_h
       )
+    end
 
-      expect(amortization_schedule.payments[2].to_h).to eq(
+    it "returns the expected last payment" do
+      expect(payments[2].to_h).to eq(
         described_class::Payment.new(
           payment: Bankroll::Decimal["695.65"],
-          principal: Bankroll::Decimal["284.56"],
+          principal: Bankroll::Decimal["284.57"],
           interest: Bankroll::Decimal["411.08"],
           total_interest: Bankroll::Decimal["1_235.37"],
-          balance: Bankroll::Decimal["164_148.43"]
+          balance: Bankroll::Decimal["164_148.42"]
         ).to_h
       )
     end

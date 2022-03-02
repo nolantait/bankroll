@@ -15,11 +15,9 @@ module Bankroll
     end
 
     ConvertToDecimal = lambda do |value|
-      if value.is_a? Bankroll::Decimal
-        return value
-      else
-        Bankroll::Decimal[value.to_s]
-      end
+      return value if value.is_a? Bankroll::Decimal
+
+      Bankroll::Decimal[value.to_s]
     end
 
     register("bankroll.decimal", Constructor[Bankroll::Decimal, fn: ConvertToDecimal])

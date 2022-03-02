@@ -20,22 +20,14 @@ module Bankroll
 
     def each
       Enumerator.new do |yielder|
-        total_interest = Decimal["0"]
-        balance = @present_value
+        current_payment = Payment.new(
+          payment: monthly_payment.round,
+          total_interest: Decimal["0"],
+          balance: @present_value
+        )
 
         periods.times do |period|
-          interest = interest_payment(period + 1)
-          principal = payment - interest
-          total_interest += interest
-          balance -= principal
-
-          yielder << Payment.new(
-            payment: payment.round,
-            principal: principal.round,
-            interest: interest.round,
-            total_interest: total_interest.round,
-            balance: balance.round
-          )
+          yielder << current_payment = payment_for_period(period, current_payment)
         end
       end
     end
@@ -50,18 +42,31 @@ module Bankroll
 
     private
 
+    def payment_for_period(period, last_payment)
+      interest = interest_payment(period + 1)
+      principal = last_payment.payment - interest
+
+      Payment.new(
+        payment: last_payment.payment,
+        principal: principal.round,
+        interest: interest.round,
+        total_interest: (last_payment.total_interest + interest).round,
+        balance: (last_payment.balance - principal).round
+      )
+    end
+
     def interest_payment(period)
       InterestPayment.call(
         interest_rate: @interest_rate,
         periods: @periods,
         period:,
         present_value: @present_value,
-        payment: -payment
+        payment: -monthly_payment
       )
     end
 
-    def payment
-      @payment ||= Bankroll::Payment.call(
+    def monthly_payment
+      @monthly_payment ||= Bankroll::Payment.call(
         present_value: @present_value,
         interest_rate: @interest_rate,
         periods: @periods
