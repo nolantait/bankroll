@@ -54,7 +54,7 @@ module Bankroll
       InterestPayment.call(
         interest_rate: @interest_rate,
         periods: @periods,
-        period: period,
+        period:,
         present_value: @present_value,
         payment: -payment
       )

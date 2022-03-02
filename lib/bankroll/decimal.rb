@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Bankroll
-  class Decimal < Delegator
+  class Decimal < SimpleDelegator
     include Dry::Equalizer.new(:value)
 
     ROUNDING = :half_even
@@ -27,6 +27,7 @@ module Bankroll
                 end
 
       @value = BigDecimal(Types["string"][decimal])
+      super(@value)
     end
 
     def round(precision = 2, rounding = ROUNDING)

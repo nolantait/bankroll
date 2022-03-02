@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Bankroll
   class UnpaidBalance
     extend Callable

@@ -7,15 +7,15 @@ RSpec.describe Bankroll do
   let(:payment) { Bankroll::Decimal["3_216.40"] }
 
   it "has a version number" do
-    expect(Bankroll::VERSION).not_to be nil
+    expect(Bankroll::VERSION).not_to be_nil
   end
 
   describe ".payment" do
     it "returns the expected payment" do
       result = described_class.payment(
         present_value: loan_amount,
-        periods: periods,
-        interest_rate: interest_rate
+        periods:,
+        interest_rate:
       ).round
 
       expect(result).to eq payment
@@ -26,10 +26,10 @@ RSpec.describe Bankroll do
     it "returns the amount remaining in a loans payment schedule" do
       result = described_class.unpaid_balance(
         present_value: loan_amount,
-        interest_rate: interest_rate,
-        periods: periods,
+        interest_rate:,
+        periods:,
         period: 1,
-        payment: payment
+        payment:
       ).round
 
       expect(result).to eq Bankroll::Decimal["997_616.94"]
@@ -40,7 +40,7 @@ RSpec.describe Bankroll do
     it "returns the expected rate" do
       result = described_class.interest_rate(
         present_value: loan_amount,
-        periods: periods,
+        periods:,
         payment: -payment
       ).round(3)
 
@@ -51,9 +51,9 @@ RSpec.describe Bankroll do
   describe ".present_value" do
     it "returns the expected loan amount" do
       result = described_class.present_value(
-        periods: periods,
-        payment: payment,
-        interest_rate: interest_rate
+        periods:,
+        payment:,
+        interest_rate:
       ).round
 
       expect(result).to eq Bankroll::Decimal["1_000_001.49"]
@@ -111,13 +111,15 @@ RSpec.describe Bankroll do
   end
 
   describe ".amortization_schedule" do
-    it "returns the expected payments" do
-      result = described_class.amortization_schedule(
+    let(:amortization_schedule) do
+      described_class.amortization_schedule(
         present_value: 165_000,
         interest_rate: 0.03 / 12.0,
         periods: 360
       )
+    end
 
+    it "returns the expected payments" do
       expect(result.payments.first).to eq Bankroll::AmortizationSchedule::Payment.new(
         payment: Bankroll::Decimal["695.65"],
         principal: Bankroll::Decimal["283.15"],

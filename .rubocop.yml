@@ -5,6 +5,7 @@ require:
 
 # ==================== Main ==========================
 AllCops:
+  TargetRubyVersion: 3.1
   NewCops: enable
   DisplayCopNames: true
   Exclude:
@@ -69,6 +70,8 @@ Layout/LineEndStringConcatenationIndentation:
   IndentationWidth: 0
 Layout/LineLength:
   Max: 100
+  Exclude:
+    - "lib/bankroll/interest_rate.rb"
 Layout/MultilineArrayLineBreaks:
   Enabled: true
 Layout/MultilineAssignmentLayout:
@@ -119,7 +122,7 @@ Lint/ElseLayout:
 Lint/EmptyBlock:
   Enabled: true
   AllowComments: false
-  AllowEmptyLambdas: false
+  AllowEmptyLambdas: true
 Lint/EmptyClass:
   Enabled: true
 Lint/EmptyConditionalBody:
@@ -200,6 +203,16 @@ Metrics/BlockLength:
     - "spec/**/*"
 Metrics/ParameterLists:
   Max: 3
+  Exclude:
+    - "lib/bankroll/interest_rate.rb"
+Metrics/AbcSize:
+  Enabled: true
+  Exclude:
+    - "lib/bankroll/interest_rate.rb"
+Metrics/MethodLength:
+  Enabled: true
+  Exclude:
+    - "lib/bankroll/interest_rate.rb"
 Naming/BlockForwarding:
   Enabled: true
 Naming/InclusiveLanguage:
@@ -224,8 +237,12 @@ Naming/VariableNumber:
   EnforcedStyle: snake_case
   AllowedIdentifiers:
     - capture3
+  Exclude:
+    - "lib/bankroll/interest_rate.rb"
 Naming/MethodParameterName:
   AllowNamesEndingInNumbers: false
+  Exclude:
+    - "lib/bankroll/interest_rate.rb"
 Security/IoMethods:
   Enabled: true
 Style/AccessorGrouping:
